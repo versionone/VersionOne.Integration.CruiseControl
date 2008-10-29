@@ -9,8 +9,13 @@
     <property name="compiler.args" value=""/>
 
     <!--Settings-->
+    <property name="ver.major" value="8"/>
+    <property name="ver.minor" value="1"/>
+    <property name="ver.build" value="0"/>
+    <property name="publish.dir" value="."/>
+    <property name="build.version" value="${ver.major}.${ver.minor}.${ver.build}"/>
     <property name="jar.filename" value="V1Publisher.jar"/>
-    <property name="zip.filename" value="V1Publisher.zip"/>
+    <property name="zip.filename" value="CruiseControlPublisher.${build.version}.zip"/>
 
     <!-- Directories -->
     <property name="base.dir" value="."/>
@@ -76,10 +81,11 @@
               todir="${distr.dir}"/>
         <copy file="readme.txt" todir="${distr.dir}"/>
 
-        <zip destfile="${zip.filename}" basedir="${distr.dir}"/>
+        <zip destfile="${publish.dir}/${zip.filename}" basedir="${distr.dir}"/>
     </target>
+
 
     <target name="clean" depends="compile.clean,package.clean,zip.clean"/>
 
-    <target name="ccnet.build" depends="clean, package"/>
+    <target name="ccnet.build" depends="clean, zip.plugin"/>
 </project>
