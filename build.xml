@@ -80,4 +80,6 @@
     </target>
 
     <target name="clean" depends="compile.clean,package.clean,zip.clean"/>
+
+    <target name="ccnet.build" depends="clean, package"/>
 </project>
