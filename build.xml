@@ -12,7 +12,7 @@
     <property name="ver.major" value="8"/>
     <property name="ver.minor" value="1"/>
     <property name="ver.build" value="0"/>
-    <property name="publish.dir" value="."/>
+    <property name="publish.dir" value="./_publish"/>
     <property name="build.version" value="${ver.major}.${ver.minor}.${ver.build}"/>
     <property name="jar.filename" value="V1Publisher.jar"/>
     <property name="zip.filename" value="CruiseControlPublisher.${build.version}.zip"/>
@@ -70,10 +70,12 @@
     <target name="zip.clean">
         <delete dir="${distr.dir}"/>
         <delete file="${zip.filename}"/>
+	<!--<delete dir="${publish.dir}"/>-->
     </target>
 
     <target name="zip.plugin" depends="zip.clean, package">
         <mkdir dir="${distr.dir}"/>
+	<mkdir dir="${publish.dir}"/>
 
         <copy file="${build.dir}/${jar.filename}" todir="${distr.dir}"/>
         <copy file="${lib.dir}/VersionOne.APIClient.jar" todir="${distr.dir}"/>
