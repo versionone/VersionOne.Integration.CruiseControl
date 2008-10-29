@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--(c) Copyright 2008, VersionOne, Inc. All rights reserved. (c)-->
+<project name="V1CC" default="zip.plugin">
+
+    <!-- Compiler settings -->
+    <property name="compiler.debug" value="on"/>
+    <property name="compiler.generate.no.warnings" value="off"/>
+    <property name="compiler.max.memory" value="128m"/>
+    <property name="compiler.args" value=""/>
+
+    <!--Settings-->
+    <property name="jar.filename" value="V1Publisher.jar"/>
+    <property name="zip.filename" value="V1Publisher.zip"/>
+
+    <!-- Directories -->
+    <property name="base.dir" value="."/>
+    <property name="build.dir" value="${basedir}/Common"/>
+    <property name="bin.product.dir" value="${build.dir}/bin_production"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
+    <property name="distr.dir" value="${basedir}/distr"/>
+
+    <path id="classpath">
+        <pathelement location="${lib.dir}/VersionOne.APIClient.jar"/>
+        <pathelement location="${lib.dir}/cruisecontrol.jar"/>
+        <pathelement location="${lib.dir}/jdom.jar"/>
+        <pathelement location="${lib.dir}/log4j.jar"/>
+        <pathelement location="${lib.dir}/jaxen-1.1-beta-8.jar"/>
+        <pathelement location="${lib.dir}/VersionOne.ObjectModel.jar"/>
+    </path>
+
+
+    <target name="compile.clean">
+        <delete dir="${bin.product.dir}"/>
+    </target>
+
+    <target name="compile" depends="compile.clean"
+            description="Compile V1CruiseControl Publisher; production classes">
+        <mkdir dir="${bin.product.dir}"/>
+
+        <javac destdir="${bin.product.dir}" debug="${compiler.debug}"
+               nowarn="${compiler.generate.no.warnings}"
+               memorymaximumsize="${compiler.max.memory}"
+               fork="true" srcdir="${base.dir}/src">
+            <compilerarg line="${compiler.args}"/>
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <target name="package.clean">
+        <delete file="${build.dir}/${jar.filename}"/>
+    </target>
+
+    <target name="package" depends="package.clean, compile"
+            description="creating jar parckage">
+        <jar jarfile="${build.dir}/${jar.filename}"
+             basedir="${bin.product.dir}">
+            <manifest>
+                <attribute name="BuiltBy" value="VersionOne"/>
+                <attribute name="Main-Class"
+                           value="com.versionone.cruisecontrol.publisher.VersionOnePublisher"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="zip.clean">
+        <delete dir="${distr.dir}"/>
+        <delete file="${zip.filename}"/>
+    </target>
+
+    <target name="zip.plugin" depends="zip.clean, package">
+        <mkdir dir="${distr.dir}"/>
+
+        <copy file="${build.dir}/${jar.filename}" todir="${distr.dir}"/>
+        <copy file="${lib.dir}/VersionOne.APIClient.jar" todir="${distr.dir}"/>
+        <copy file="${lib.dir}/VersionOne.ObjectModel.jar"
+              todir="${distr.dir}"/>
+        <copy file="readme.txt" todir="${distr.dir}"/>
+
+        <zip destfile="${zip.filename}" basedir="${distr.dir}"/>
+    </target>
+
+    <target name="clean" depends="compile.clean,package.clean,zip.clean"/>
+</project>
