@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--(c) Copyright 2008, VersionOne, Inc. All rights reserved. (c)-->
-<project name="V1CC" default="zip.plugin">
+<project name="V1CC">
 
     <!-- Compiler settings -->
     <property name="compiler.debug" value="on"/>
@@ -23,6 +23,7 @@
     <property name="bin.product.dir" value="${build.dir}/bin_production"/>
     <property name="lib.dir" value="${basedir}/lib"/>
     <property name="distr.dir" value="${basedir}/distr"/>
+    <property name="junit.output.dir" value="junit"/>
 
     <path id="classpath">
         <pathelement location="${lib.dir}/VersionOne.APIClient.jar"/>
@@ -31,6 +32,7 @@
         <pathelement location="${lib.dir}/log4j.jar"/>
         <pathelement location="${lib.dir}/jaxen-1.1-beta-8.jar"/>
         <pathelement location="${lib.dir}/VersionOne.ObjectModel.jar"/>
+	<pathelement location="${lib.dir}/junit-4.4.jar"/>
     </path>
 
 
@@ -45,7 +47,9 @@
         <javac destdir="${bin.product.dir}" debug="${compiler.debug}"
                nowarn="${compiler.generate.no.warnings}"
                memorymaximumsize="${compiler.max.memory}"
-               fork="true" srcdir="${base.dir}/src">
+               fork="true">
+            <src path="${base.dir}/src"/>
+            <src path="${base.dir}/tests"/>
             <compilerarg line="${compiler.args}"/>
             <classpath refid="classpath"/>
         </javac>
@@ -57,8 +61,10 @@
 
     <target name="package" depends="package.clean, compile"
             description="creating jar parckage">
-        <jar jarfile="${build.dir}/${jar.filename}"
-             basedir="${bin.product.dir}">
+        <jar jarfile="${build.dir}/${jar.filename}">
+
+	    <fileset dir="${bin.product.dir}"
+                excludes="**/PublisherTester.class, **/DOMtoJDOM.class"/>
             <manifest>
                 <attribute name="BuiltBy" value="VersionOne"/>
                 <attribute name="Main-Class"
@@ -67,10 +73,29 @@
         </jar>
     </target>
 
+    <target name="plugin.test" depends="compile">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <classpath>
+	       <pathelement location="${bin.product.dir}"/>
+	       <path refid="classpath"/>
+            </classpath>
+            <formatter type="xml"/>
+
+
+            <batchtest fork="yes" todir="${junit.output.dir}">
+                <fileset dir="${bin.product.dir}">
+	            <include name="**/PublisherTester.class"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
     <target name="zip.clean">
         <delete dir="${distr.dir}"/>
         <delete file="${zip.filename}"/>
 	<!--<delete dir="${publish.dir}"/>-->
+	<delete dir="${junit.output.dir}"/>
     </target>
 
     <target name="zip.plugin" depends="zip.clean, package">
@@ -89,5 +114,5 @@
 
     <target name="clean" depends="compile.clean,package.clean,zip.clean"/>
 
-    <target name="ccnet.build" depends="clean, zip.plugin"/>
+    <target name="ccnet.build" depends="clean, compile, plugin.test, zip.plugin"/>
 </project>
