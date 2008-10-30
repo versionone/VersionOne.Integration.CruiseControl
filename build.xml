@@ -140,6 +140,7 @@
     </target>
 
     <target name="coverage" depends="compile, coverage.clean, coverage.init">
+	<mkdir dir="${junit.output.dir}"/>
         <cobertura-instrument todir="${coverage.classes}" datafile="${coverage.file}">
             	    <fileset dir="${bin.product.dir}">
 			<include name="**/*.class"/>
@@ -181,5 +182,5 @@
 
     <target name="clean" depends="compile.clean,package.clean,zip.clean"/>
 
-    <target name="ccnet.build" depends="clean, compile, coverage, zip.plugin"/>
+    <target name="ccnet.build" depends="clean, compile, coverage, plugin.test, zip.plugin"/>
 </project>
