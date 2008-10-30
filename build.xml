@@ -181,5 +181,5 @@
 
     <target name="clean" depends="compile.clean,package.clean,zip.clean"/>
 
-    <target name="ccnet.build" depends="clean, compile, plugin.test, zip.plugin"/>
+    <target name="ccnet.build" depends="clean, compile, coverage, zip.plugin"/>
 </project>
