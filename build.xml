@@ -124,7 +124,6 @@
         <copy file="${lib.dir}/VersionOne.APIClient.jar" todir="${distr.dir}"/>
         <copy file="${lib.dir}/VersionOne.ObjectModel.jar"
               todir="${distr.dir}"/>
-        <copy file="readme.txt" todir="${distr.dir}"/>
 
 		<copy todir="${distr.dir}/doc" flatten="false">
 			<fileset dir="${doc.dir}">
