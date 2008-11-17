@@ -29,7 +29,7 @@
     <property name="coverage.dir" value="coverage"/>
     <property name="coverage.classes" value="${coverage.dir}/classes"/>
     <property name="coverage.junit" value="${coverage.dir}/junit"/>
-
+	<property name="doc.dir" value="${basedir}/doc"/>
 
     <path id="classpath">
         <pathelement location="${lib.dir}/VersionOne.APIClient.jar"/>
@@ -179,6 +179,58 @@
             out="${coverage.dir}/coverage.xml"/>
     </target>
 
+	<target name="gendoc.clean">
+		<delete dir="${doc.dir}"/>
+	</target>
+	
+	<!-- ===================================================================== -->
+	<!-- Create Documentation-->
+	<!-- ===================================================================== -->		
+	<macrodef name="gendoc.content.base">
+		<attribute name="filename"/>
+		<attribute name="collect.xref.targets"/>
+		<attribute name="content.doc.output.dir" default="${doc.dir}/@{filename}"/>
+		<sequential>
+			<mkdir dir="@{content.doc.output.dir}"/>
+			<echo>${doc.source.dir} [/] ${common.dir}/docbook/xsltproc/xsltproc.exe -o ../@{content.doc.output.dir}/@{filename}.html --stringparam current.docid ${filename} --stringparam target.database.document olinkdb.xml --stringparam collect.xref.targets ${collect.xref.targets} --stringparam targets.filename ${filename}.db Common/v1integration.xsl @{filename}/@{filename}.xml</echo>
+			<exec dir="${doc.source.dir}" executable="${common.dir}/docbook/xsltproc/xsltproc.exe"
+				failonerror="true">
+				<arg
+					line="-o @{content.doc.output.dir}/@{filename}.html --stringparam current.docid ${filename} --stringparam target.database.document olinkdb.xml --stringparam collect.xref.targets ${collect.xref.targets} --stringparam targets.filename ${filename}.db Common/v1integration.xsl @{filename}/@{filename}.xml"
+				/>
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<target name="gendoc">
+		<property name="doc.source.dir" value="${buildDirectory}/DocSource"/>
+		<property name="common.dir" value="${doc.source.dir}/Common"/>
+		
+		<svn javahl="false">
+			<export srcurl="${doc.URL}" revision="${doc.revision}"
+				destpath="${doc.source.dir}" force="true"/>
+		</svn>
+		
+		<delete dir="${doc.dir}/Common"/>
+		<mkdir dir="${doc.dir}/Common"/>
+		<copy file="${doc.source.dir}/Common/v1integration.css" todir="${doc.dir}/Common"/>
+		
+		<!-- this is the index file -->
+		<echo>${doc.source.dir} [/] ${common.dir}/docbook/xsltproc/xsltproc.exe -o ../${doc.dir}/index.html Common/index.xsl index.xml</echo>
+		<exec dir="${doc.source.dir}" executable="${common.dir}/docbook/xsltproc/xsltproc.exe"
+			failonerror="true">
+			<arg line="-o ${doc.dir}/index.html Common/index.xsl index.xml"/>
+		</exec>
+		
+		<gendoc.content.base filename="V1Publisher" collect.xref.targets="only"/>
+		<gendoc.content.base filename="V1Publisher" collect.xref.targets="no"/>
+		
+		<copy todir="${doc.dir}/V1Publisher" flatten="false">
+			<fileset dir="${doc.source.dir}/V1Publisher">
+				<include name="*.JPG" />
+			</fileset>
+		</copy>
+	</target>	
 
     <target name="clean" depends="compile.clean,package.clean,zip.clean"/>
 
