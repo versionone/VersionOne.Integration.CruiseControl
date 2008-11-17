@@ -127,7 +127,7 @@
         <copy file="readme.txt" todir="${distr.dir}"/>
 
 		<copy todir="${distr.dir}/doc" flatten="false">
-			<fileset dir="${doc.source.dir}">
+			<fileset dir="${doc.dir}">
 				<include name="**/*" />
 			</fileset>
 		</copy>
