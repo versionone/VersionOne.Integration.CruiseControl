@@ -6,6 +6,7 @@
 	<!ENTITY downloads SYSTEM "../Common/download.xml">
 	<!ENTITY ServiceInstall SYSTEM "../ServiceInstall.xml">
 	<!ENTITY ccnetconfig  SYSTEM "ccnetconfig.cdata">
+	<!ENTITY ccregister SYSTEM "ccregister.cdata">
 	<!ENTITY name "V1CCNetPublisher">
 	]>
 <article id="v1ccnetpublisher.user">
@@ -105,7 +106,7 @@
 			Continous Integration Server:
 			<itemizedlist>
 				<listitem>
-					<para>Tested with CruiseControl ????????</para>
+					<para>Tested with CruiseControl Version 2.7.3</para>
 				</listitem>
 			</itemizedlist>
 		</para>
@@ -118,7 +119,7 @@
 		<para>
 			These installation instructions assume that <ulink
 				url="http://cruisecontrol.sourceforge.net/"
-				>CruiseControl</ulink> is already installed, configured, and working properly. 
+			>CruiseControl</ulink> is already installed, configured, and working properly. 
 		</para>
 		<section id="install.location">
 			<title>1.  Ensure Connectivity</title>
@@ -139,7 +140,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<link linkend="configuration.ccnet">Configure CruiseControl</link>
+						<link linkend="configuration.cc">Configure CruiseControl</link>
 					</para>
 				</listitem>
 			</orderedlist>
@@ -239,31 +240,35 @@
 				</listitem>
 			</orderedlist>
 		</section>
-		<section id="configuration.ccnet">
+		<section id="configuration.cc">
 			<title>CruiseControl Configuration</title>
 			<para>This section describes how to configure CruiseControl for use with VersionOne</para>
 			<orderedlist spacing="compact">
 				<listitem>
 					<para>
-						Copy the following files from the downloaded package into your CruiseControl server directory
+						Copy the following files from the downloaded package into the CruiseControl lib directory
 						<itemizedlist>
 							<listitem>
-								<para>ccnet.VersionOnePublisher.plugin.dll</para>
+								<para>V1Publisher.jar</para>
 							</listitem>
 							<listitem>
-								<para>VersionOne.SDK.APIClient.dll</para>
+								<para>VersionOne.APIClient.jar</para>
 							</listitem>
 							<listitem>
-								<para>VersionOne.SDK.ObjectModel.dll</para>
+								<para>VersionOne.ObjectModel.jar</para>
 							</listitem>
-						</itemizedlist>
-						The other dlls are provided as reference only and should not be copied or moved.   
+						</itemizedlist>   
 					</para>
 				</listitem>
 				<listitem>
-					<para>Add the VersionOne publisher to the list of publishers for the appropriate project in your CruiseControl.NET configuration file (ccnet.config)
-                		<programlisting>&ccnetconfig;</programlisting>
+					<para>
+						Register the VersionOne plugin by adding the following line to config.xml
+						<programlisting>&ccregister;</programlisting>
+						This registration can occur directly under the <code>&lt;cruisecontrol&gt;</code> element, or within the selected <code>&lt;project&gt;</code> element.
 					</para>
+				</listitem>
+				<listitem>
+					<para>Add the VersionOne publisher to the list of publishers for the select <code>&lt;project&gt;</code> elements in config.xml <programlisting>&ccnetconfig;</programlisting></para>
 				</listitem>
 				<listitem>
 					<para>Use the following table to configure the VersionOne Publisher</para>
@@ -353,7 +358,7 @@
 								<entry>http://V1Host/VersionOne/</entry>
 							</row>
 							<row>
-								<entry>The CruiseControl.NET URL is</entry>
+								<entry>The CruiseControl URL is</entry>
 								<entry>http://CCHost/ccnet</entry>
 							</row>
 							<row>
@@ -361,7 +366,7 @@
 								<entry>admin</entry>
 							</row>
 							<row>
-								<entry>When searching CruiseControl.NET comments to determine if it contains a VersionOne Workitem, the publisher will use the regular expression</entry>
+								<entry>When searching CruiseControl comments to determine if it contains a VersionOne Workitem, the publisher will use the regular expression</entry>
 								<entry>"[A-Z]{1,2}-[0-9]+”</entry>
 							</row>
 							<row>
