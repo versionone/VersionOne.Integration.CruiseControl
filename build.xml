@@ -117,7 +117,8 @@
 
     <target name="zip.plugin" depends="zip.clean, package">
         <mkdir dir="${distr.dir}"/>
-	<mkdir dir="${publish.dir}"/>
+		<mkdir dir="${publish.dir}"/>
+		<mkdir dir="${distr.dir}/doc"/>
 
         <copy file="${build.dir}/${jar.filename}" todir="${distr.dir}"/>
         <copy file="${lib.dir}/VersionOne.APIClient.jar" todir="${distr.dir}"/>
@@ -125,6 +126,13 @@
               todir="${distr.dir}"/>
         <copy file="readme.txt" todir="${distr.dir}"/>
 
+		<copy todir="${distr.dir}/doc" flatten="false">
+			<fileset dir="${doc.source.dir}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+
+		
         <zip destfile="${publish.dir}/${zip.filename}" basedir="${distr.dir}"/>
     </target>
 
@@ -203,23 +211,18 @@
 	</macrodef>
 
 	<target name="gendoc">
-		<property name="doc.source.dir" value="${buildDirectory}/DocSource"/>
+		<property name="doc.source.dir" value="${base.dir}/DocSource"/>
 		<property name="common.dir" value="${doc.source.dir}/Common"/>
-		
-		<svn javahl="false">
-			<export srcurl="${doc.URL}" revision="${doc.revision}"
-				destpath="${doc.source.dir}" force="true"/>
-		</svn>
 		
 		<delete dir="${doc.dir}/Common"/>
 		<mkdir dir="${doc.dir}/Common"/>
 		<copy file="${doc.source.dir}/Common/v1integration.css" todir="${doc.dir}/Common"/>
 		
 		<!-- this is the index file -->
-		<echo>${doc.source.dir} [/] ${common.dir}/docbook/xsltproc/xsltproc.exe -o ../${doc.dir}/index.html Common/index.xsl index.xml</echo>
+		<echo>${doc.source.dir} [/] ${common.dir}/docbook/xsltproc/xsltproc.exe -o ../${doc.dir}/index.html Common/index.xsl versionOnePublisher.index.xml</echo>
 		<exec dir="${doc.source.dir}" executable="${common.dir}/docbook/xsltproc/xsltproc.exe"
 			failonerror="true">
-			<arg line="-o ${doc.dir}/index.html Common/index.xsl index.xml"/>
+			<arg line="-o ${doc.dir}/index.html Common/index.xsl versionOnePublisher.index.xml"/>
 		</exec>
 		
 		<gendoc.content.base filename="V1Publisher" collect.xref.targets="only"/>
@@ -232,7 +235,7 @@
 		</copy>
 	</target>	
 
-    <target name="clean" depends="compile.clean,package.clean,zip.clean"/>
+    <target name="clean" depends="compile.clean,gendoc.clean,package.clean,zip.clean"/>
 
-    <target name="ccnet.build" depends="clean, compile, coverage, plugin.test, zip.plugin"/>
+    <target name="ccnet.build" depends="clean, compile, coverage, plugin.test, gendoc, zip.plugin"/>
 </project>

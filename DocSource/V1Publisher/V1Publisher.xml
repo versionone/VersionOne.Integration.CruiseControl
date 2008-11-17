@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--<!DOCTYPE article PUBLIC "-//OASIS//DTD Simplied DocBook XML V1.1//EN" "http://www.oasis-open.org/docbook/xml/simple/1.1/sdocbook.dtd"-->
 <!--<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd"-->
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "../../Common/docbook/xml/4.3/docbookx.dtd"
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "../Common/docbook/xml/4.3/docbookx.dtd"
 [
 	<!ENTITY downloads SYSTEM "../Common/download.xml">
 	<!ENTITY ServiceInstall SYSTEM "../ServiceInstall.xml">
