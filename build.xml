@@ -199,11 +199,11 @@
 		<attribute name="content.doc.output.dir" default="${doc.dir}/@{filename}"/>
 		<sequential>
 			<mkdir dir="@{content.doc.output.dir}"/>
-			<echo>${doc.source.dir} [/] ${common.dir}/docbook/xsltproc/xsltproc.exe -o ../@{content.doc.output.dir}/@{filename}.html --stringparam current.docid ${filename} --stringparam target.database.document olinkdb.xml --stringparam collect.xref.targets ${collect.xref.targets} --stringparam targets.filename ${filename}.db Common/v1integration.xsl @{filename}/@{filename}.xml</echo>
+			<echo>${doc.source.dir} [/] ${common.dir}/docbook/xsltproc/xsltproc.exe -o ../@{content.doc.output.dir}/@{filename}.html --stringparam current.docid ${filename} --stringparam target.database.document olinkdb.xml --stringparam collect.xref.targets ${collect.xref.targets} --stringparam targets.filename @{filename}.db Common/v1integration.xsl @{filename}/@{filename}.xml</echo>
 			<exec dir="${doc.source.dir}" executable="${common.dir}/docbook/xsltproc/xsltproc.exe"
 				failonerror="true">
 				<arg
-					line="-o @{content.doc.output.dir}/@{filename}.html --stringparam current.docid ${filename} --stringparam target.database.document olinkdb.xml --stringparam collect.xref.targets ${collect.xref.targets} --stringparam targets.filename ${filename}.db Common/v1integration.xsl @{filename}/@{filename}.xml"
+					line="-o @{content.doc.output.dir}/@{filename}.html --stringparam current.docid ${filename} --stringparam target.database.document olinkdb.xml --stringparam collect.xref.targets ${collect.xref.targets} --stringparam targets.filename @{filename}.db Common/v1integration.xsl @{filename}/@{filename}.xml"
 				/>
 			</exec>
 		</sequential>
@@ -224,14 +224,14 @@
 			<arg line="-o ${doc.dir}/index.html Common/index.xsl versionOnePublisher.index.xml"/>
 		</exec>
 		
+		<copy todir="${doc.dir}/V1Publisher" flatten="false">
+			<fileset dir="${doc.source.dir}/V1Publisher">
+				<include name="*.jpg" />
+			</fileset>
+		</copy>
 		<gendoc.content.base filename="V1Publisher" collect.xref.targets="only"/>
 		<gendoc.content.base filename="V1Publisher" collect.xref.targets="no"/>
 		
-		<copy todir="${doc.dir}/V1Publisher" flatten="false">
-			<fileset dir="${doc.source.dir}/V1Publisher">
-				<include name="*.JPG" />
-			</fileset>
-		</copy>
 	</target>	
 
     <target name="clean" depends="compile.clean,gendoc.clean,package.clean,zip.clean"/>
