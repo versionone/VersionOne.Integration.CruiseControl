@@ -7,7 +7,7 @@
 	<!ENTITY ServiceInstall SYSTEM "../ServiceInstall.xml">
 	<!ENTITY ccnetconfig  SYSTEM "ccnetconfig.cdata">
 	<!ENTITY ccregister SYSTEM "ccregister.cdata">
-	<!ENTITY name "V1CCNetPublisher">
+	<!ENTITY name "V1Publisher">
 	]>
 <article id="v1ccnetpublisher.user">
 	<title>VersionOne CruiseControl Integration</title>
@@ -174,7 +174,7 @@
 					<para>Select the "Build Run Quicklist" Report </para>
 				</listitem>
 			</orderedlist>
-			<para>You should an entry in the grid for the build you forced. If not, verify your configuration.</para>
+			<para>You should see an entry in the grid for the build you forced. If not, verify your configuration.</para>
 		</section>
 	</section>
 	<section id="configuration">
@@ -257,7 +257,7 @@
 							<listitem>
 								<para>VersionOne.ObjectModel.jar</para>
 							</listitem>
-						</itemizedlist>   
+						</itemizedlist>
 					</para>
 				</listitem>
 				<listitem>
