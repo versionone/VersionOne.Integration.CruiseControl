@@ -18,7 +18,7 @@
 			stories and defects to a particular build. This visibility is useful when identifying problem builds or generating release notes.
 		</para>
 		<para>				
-			Once the VersionOne Publisher has been installed, team members include a VersionOne identifier , such as “S-01454” or "T-01234", in the comments of their SCM 
+			Once the VersionOne Publisher has been installed, team members include a VersionOne identifier , such as “S-01454” or "TK-01234", in the comments of their SCM 
 			commit .  Every time a build executes the publisher creates a BuildRun asset in VersionOne with details of the build.  If the build comment contains
 			story or defect IDs, the publisher will also create or reuse change-sets assets in VersionOne and assoicates the build with the appropriate 
 			story or defect. 
