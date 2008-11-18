@@ -18,7 +18,7 @@
 			stories and defects to a particular build. This visibility is useful when identifying problem builds or generating release notes.
 		</para>
 		<para>				
-			Once the VersionOne Publisher has been installed, team members include a story or defect ID, such as “S-01454”, in the comments of their SCM 
+			Once the VersionOne Publisher has been installed, team members include a VersionOne identifier , such as “S-01454” or "T-01234", in the comments of their SCM 
 			commit .  Every time a build executes the publisher creates a BuildRun asset in VersionOne with details of the build.  If the build comment contains
 			story or defect IDs, the publisher will also create or reuse change-sets assets in VersionOne and assoicates the build with the appropriate 
 			story or defect. 
@@ -37,7 +37,7 @@
 							<para>Which build contained the fix for the defect?</para>
 						</listitem>
 						<listitem>
-							<para>Which build contains work for the defect?</para>
+							<para>Which builds contain work for the defect?</para>
 						</listitem>
 					</itemizedlist>
 				</listitem>
@@ -45,7 +45,7 @@
 					<para>For Stories (Backlog Item)</para>
 					<itemizedlist>
 						<listitem>
-							<para>Which build contains work for the story?</para>
+							<para>Which builds contain work for the story?</para>
 						</listitem>
 						<listitem>
 							<para>Which build contained the completed story?</para>
@@ -212,7 +212,7 @@
 							<para>Name – this is how the Build Project will be known to VersionOne users</para>
 						</listitem>
 						<listitem>
-							<para>Reference – this is the Build Project is known to the partner system</para>
+							<para>Reference – this is how the Build Project is known to Cruise Control</para>
 						</listitem>
 					</orderedlist>
 				</listitem>
