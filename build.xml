@@ -111,6 +111,7 @@
     <target name="zip.clean">
         <delete dir="${distr.dir}"/>
         <delete file="${zip.filename}"/>
+        <delete file="${source.zip.filename}"/>
 	<!--<delete dir="${publish.dir}"/>-->
 	<delete dir="${junit.output.dir}"/>
 	<delete dir="." includes="cobertura.ser"/>
