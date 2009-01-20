@@ -140,7 +140,7 @@
 				<include name="testdata.xml"/>
 				<include name="stripDTD.xsl"/>
 				<include name="src/**/*"/>
-				<include name="test/**/*"/>
+				<include name="tests/**/*"/>
 				<include name="lib/**/*"/>
 				<include name="DocSource/**/*"/>
 			</fileset>
