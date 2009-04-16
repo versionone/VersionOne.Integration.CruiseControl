@@ -1,5 +1,5 @@
 <![CDATA[<publishers>
-	<versionone url="http://V1Host/VersionOne/" username="admin" password="admin" webroot="http://CCHost/ccnet" referenceexpression="[A-Z]{1,2}-[0-9]+" referencefield="Number"/>
+	<VersionOnePublisher url="http://V1Host/VersionOne/" username="admin" password="admin" webroot="http://CCHost/ccnet" referenceexpression="[A-Z]{1,2}-[0-9]+" referencefield="Number"/>
 	<onsuccess>
 		<artifactspublisher dest="..." file="..."/>
 	</onsuccess>			
