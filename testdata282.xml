@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cruisecontrol>
+  <modifications>
+    <modification type="svn">
+      <file action="modified">
+        <revision>24</revision>
+        <filename>/src/CCTest.java</filename>
+      </file>
+      <date>2009-04-17T09:43:18</date>
+      <user>test</user>
+      <comment><![CDATA[testing for local]]></comment>
+      <revision>24</revision>
+    </modification>
+  </modifications>
+  <info>
+    <property name="projectname" value="cctest" />
+    <property name="lastbuild" value="20090417134205" />
+    <property name="lastsuccessfulbuild" value="20090417134205" />
+    <property name="builddate" value="2009-04-17T09:43:48" />
+    <property name="cctimestamp" value="20090417134348" />
+    <property name="label" value="build.2" />
+    <property name="interval" value="300" />
+    <property name="lastbuildsuccessful" value="true" />
+    <property name="logdir" value="D:\Temp\CC_282\cruisecontrol-bin-2.8.2\logs\cctest" />
+    <property name="logfile" value="log20090417134348Lbuild.2.xml" />
+  </info>
+  <build time="0 seconds">
+    <message priority="debug"><![CDATA[Adding reference: ant.PropertyHelper]]></message>
+    <message priority="debug"><![CDATA[Detected Java version: 1.5 in: D:\Program Files\Java\jdk1.5.0_12\jre]]></message>
+    <message priority="debug"><![CDATA[Detected OS: Windows XP]]></message>
+    <message priority="debug"><![CDATA[Adding reference: ant.ComponentHelper]]></message>
+    <message priority="debug"><![CDATA[Setting ro project property: XmlLogger.file -> log.xml]]></message>
+    <message priority="debug"><![CDATA[Setting ro project property: cclastgoodbuildtimestamp -> 20090417134205]]></message>
+    <message priority="debug"><![CDATA[Setting ro project property: cctimestamp -> 20090417134348]]></message>
+    <message priority="debug"><![CDATA[Setting ro project property: cvstimestamp -> 2009-04-17 09:43:48 GMT]]></message>
+    <message priority="debug"><![CDATA[Setting ro project property: projectname -> cctest]]></message>
+    <message priority="debug"><![CDATA[Setting ro project property: buildforced -> true]]></message>
+    <message priority="debug"><![CDATA[Setting ro project property: label -> build.2]]></message>
+    <message priority="debug"><![CDATA[Setting ro project property: cclastbuildtimestamp -> 20090417134205]]></message>
+    <message priority="debug"><![CDATA[Setting ro project property: svnrevision -> 24]]></message>
+    <message priority="debug"><![CDATA[Setting ro project property: lastbuildsuccessful -> true]]></message>
+    <message priority="debug"><![CDATA[Setting ro project property: ant.file -> D:\Temp\CC_282\cruisecontrol-bin-2.8.2\projects\cctest\build.xml]]></message>
+    <message priority="debug"><![CDATA[Adding reference: ant.projectHelper]]></message>
+    <message priority="debug"><![CDATA[Adding reference: ant.parsing.context]]></message>
+    <message priority="debug"><![CDATA[Adding reference: ant.targets]]></message>
+    <message priority="debug"><![CDATA[parsing buildfile D:\Temp\CC_282\cruisecontrol-bin-2.8.2\projects\cctest\build.xml with URI = file:/D:/Temp/CC_282/cruisecontrol-bin-2.8.2/projects/cctest/build.xml]]></message>
+    <message priority="debug"><![CDATA[Setting ro project property: ant.project.name -> CCTest]]></message>
+    <message priority="debug"><![CDATA[Adding reference: CCTest]]></message>
+    <message priority="debug"><![CDATA[Setting ro project property: ant.file.CCTest -> D:\Temp\CC_282\cruisecontrol-bin-2.8.2\projects\cctest\build.xml]]></message>
+    <message priority="debug"><![CDATA[Project base dir set to: D:\Temp\CC_282\cruisecontrol-bin-2.8.2\projects\cctest]]></message>
+    <message priority="debug"><![CDATA[+Target:]]></message>
+    <message priority="debug"><![CDATA[+Target: svn.update]]></message>
+    <message priority="debug"><![CDATA[Attempting to create object of type org.apache.tools.ant.helper.DefaultExecutor]]></message>
+    <message priority="debug"><![CDATA[Adding reference: ant.executor]]></message>
+  </build>
+</cruisecontrol>
+

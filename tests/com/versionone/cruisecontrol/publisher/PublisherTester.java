@@ -5,6 +5,7 @@ import com.versionone.om.BuildRun;
 import com.versionone.om.ChangeSet;
 import com.versionone.om.V1Instance;
 import com.versionone.om.filters.BuildRunFilter;
+import com.versionone.DB;
 import net.sourceforge.cruisecontrol.util.XMLLogHelper;
 import org.jdom.Element;
 
@@ -19,16 +20,22 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 /**
  * Tester for the VersionOnePublishe plugin
  */
 public class PublisherTester {
-    private final static String testFile = ".\\testdata.xml";
+    private final static String testFile273 = ".\\testdata.xml";
+    private final static String testFile282 = ".\\testdata282.xml";
     private V1Instance v1Instance;
-    private static final String APPLICATION_PATH = "http://jsdksrv01/VersionOne/";
+    private static final String APPLICATION_PATH = "http://jsdksrv01:8080/VersionOne/";
     private static final String USER_NAME = "admin";
     private static final String PASSWD = "admin";
+    //date for testing CC 2.7.3. log
+    private static final DB.DateTime dateOldVersion = new DB.DateTime("2008-09-15T16:53:55");
+    //date for testing CC 2.8.2 log
+    private static final DB.DateTime dateNewVersion = new DB.DateTime("2009-04-17T13:43:48");
 
     public V1Instance getV1Instance() {
         if (v1Instance == null) {
@@ -53,6 +60,22 @@ public class PublisherTester {
     }
 
     @Test
+    public void testDate273() throws Exception {
+        final Element log = getTextXml273();
+        DB.DateTime date = VersionOnePublisher.getBuildDate(new XMLLogHelper(log));
+
+        assertEquals(((Date)date.getValue()).getTime(), ((Date)dateOldVersion.getValue()).getTime());
+    }
+
+    @Test
+    public void testDate282() throws Exception {
+        final Element log = getTextXml282();
+        DB.DateTime date = VersionOnePublisher.getBuildDate(new XMLLogHelper(log));
+
+        assertEquals(((Date)date.getValue()).getTime(), ((Date)dateNewVersion.getValue()).getTime());
+    }
+
+    @Test
     @Ignore("Integrational test. Need VersionOne server with defint data coherent to testdata.xml. ")
     public void testPublish() throws Exception {
         final BuildRunFilter filter = new BuildRunFilter();
@@ -69,7 +92,7 @@ public class PublisherTester {
         }
         VersionOnePublisher publisher = createPublisher();
         publisher.validate();
-        final Element log = getTextXml();
+        final Element log = getTextXml273();
         publisher.publish(log);
 
         buildRuns = getV1Instance().get().buildRuns(filter);
@@ -121,7 +144,7 @@ public class PublisherTester {
     @Test
     public void testGetUrlToCcCreation() throws Exception {
         String expectUrl = "http://localhost:8080/buildresults/cctest?log=log20080915165355Lbuild.7";
-        XMLLogHelper helper = new XMLLogHelper(getTextXml());
+        XMLLogHelper helper = new XMLLogHelper(getTextXml273());
         VersionOnePublisher publisher = createPublisher();
 
         assertEquals(expectUrl, publisher.getUrlToCcBuild(helper));
@@ -129,14 +152,18 @@ public class PublisherTester {
 
     @Test
     public void testTypeOfBuild() throws Exception {
-        VersionOnePublisher publisher = createPublisher();
-
-        assertTrue(VersionOnePublisher.isBuildForced(getTextXml()));
+        assertTrue(VersionOnePublisher.isBuildForced(getTextXml273()));
     }
 
 
-    private org.jdom.Element getTextXml() throws Exception {
-        DOMtoJDOM xml = new DOMtoJDOM(testFile);
+    private org.jdom.Element getTextXml273() throws Exception {
+        DOMtoJDOM xml = new DOMtoJDOM(testFile273);
+
+        return xml.convert().detachRootElement();
+    }
+
+    private org.jdom.Element getTextXml282() throws Exception {
+        DOMtoJDOM xml = new DOMtoJDOM(testFile282);
 
         return xml.convert().detachRootElement();
     }

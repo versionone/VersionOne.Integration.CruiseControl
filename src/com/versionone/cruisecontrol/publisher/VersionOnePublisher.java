@@ -13,7 +13,6 @@ import com.versionone.om.filters.BuildProjectFilter;
 import com.versionone.om.filters.ChangeSetFilter;
 import com.versionone.om.filters.WorkitemFilter;
 import net.sourceforge.cruisecontrol.CruiseControlException;
-import net.sourceforge.cruisecontrol.DateFormatFactory;
 import net.sourceforge.cruisecontrol.Modification;
 import net.sourceforge.cruisecontrol.Publisher;
 import net.sourceforge.cruisecontrol.util.ValidationHelper;
@@ -22,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -263,10 +263,12 @@ public final class VersionOnePublisher implements Publisher {
     }
 
 
-    private static DB.DateTime getBuildDate(XMLLogHelper helper) {
+    public static DB.DateTime getBuildDate(XMLLogHelper helper) {
         try {
-            String timestamp = helper.getCruiseControlInfoProperty("builddate");
-            DateFormat df = DateFormatFactory.getDateFormat();
+            String timestamp = helper.getCruiseControlInfoProperty("cctimestamp");
+            //DateFormat df = DateFormatFactory.getDateFormat();
+            //20080915 161055
+            DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
             Date date = df.parse(timestamp);
             return new DB.DateTime(date);
         } catch (Exception e) {
