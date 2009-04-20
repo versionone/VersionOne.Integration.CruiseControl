@@ -266,8 +266,6 @@ public final class VersionOnePublisher implements Publisher {
     public static DB.DateTime getBuildDate(XMLLogHelper helper) {
         try {
             String timestamp = helper.getCruiseControlInfoProperty("cctimestamp");
-            //DateFormat df = DateFormatFactory.getDateFormat();
-            //20080915 161055
             DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
             Date date = df.parse(timestamp);
             return new DB.DateTime(date);
