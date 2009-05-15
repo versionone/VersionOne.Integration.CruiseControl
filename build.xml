@@ -86,6 +86,8 @@
                 <attribute name="BuiltBy" value="VersionOne"/>
                 <attribute name="Main-Class"
                            value="com.versionone.cruisecontrol.publisher.VersionOnePublisher"/>
+                <attribute name="BuildVersion" value="${build.version}"/>
+                <attribute name="BuildRev" value="${ver.build}"/>
             </manifest>
         </jar>
     </target>
