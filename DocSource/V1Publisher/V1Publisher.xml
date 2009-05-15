@@ -106,7 +106,7 @@
 			Continous Integration Server:
 			<itemizedlist>
 				<listitem>
-					<para>Tested with CruiseControl Version 2.7.3</para>
+					<para> CruiseControl Version 2.7.3 - 2.8.2</para>
 				</listitem>
 			</itemizedlist>
 		</para>
