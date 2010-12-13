@@ -1,7 +1,7 @@
 <project name='VersionOne.Java.CruiseControlPublisher-Launch'>
 	<property name='revnumber' value='0' />
 
- 	<property name='publish.public' value='\\files\Builds\Java\CruiseControlPublisher\PlugIn\${buildnumber}' />
+ 	<property name='publish.public' value='\\files\Builds\Java\CruiseControlPublisher\PlugIn\${build.number}' />
 
 	<target name='launch-build'>
     <ant antfile='build.xml' target='ccnet.build'>
