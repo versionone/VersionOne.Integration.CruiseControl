@@ -7,7 +7,7 @@
     <ant antfile='build.xml' target='ccnet.build'>
       <property name='ver.build' value='${build.number}' />
       <property name='ver.revision' value='${revnumber}' />
-      <!-- <property name='publish.dir' value='${publish.public}' /> -->
+      <property name='publish.dir' value='${publish.public}' />
     </ant>
 	</target>
 </project>
