@@ -77,7 +77,7 @@
     </target>
 
     <target name="package" depends="package.clean, compile"
-            description="creating jar parckage">
+            description="creating jar package">
         <jar jarfile="${build.dir}/${jar.filename}">
 
 	    <fileset dir="${bin.product.dir}"
@@ -199,6 +199,8 @@
         <move file="${coverage.dir}/coverage.xml" tofile="${coverage.dir}/coverage.raw"/>
         <xslt destdir="${coverage.dir}" style="${base.dir}/stripDTD.xsl" in="${coverage.dir}/coverage.raw"
             out="${coverage.dir}/coverage.xml"/>
+        <xslt destdir="${coverage.dir}" style="${base.dir}/cobertura.xsl" in="${coverage.dir}/coverage.raw"
+          out="${coverage.dir}/coverage-summary.html"/>
     </target>
 
 	<target name="gendoc.clean">
