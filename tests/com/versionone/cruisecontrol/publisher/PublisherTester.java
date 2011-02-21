@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Date;
 
 /**
- * Tester for the VersionOnePublishe plugin
+ * Tester for the VersionOnePublisher plugin
  */
 public class PublisherTester {
     private final static String testFile273 = ".\\testdata.xml";
@@ -76,7 +76,7 @@ public class PublisherTester {
     }
 
     @Test
-    @Ignore("Integrational test. Need VersionOne server with defint data coherent to testdata.xml. ")
+    @Ignore("Integrational test. Need VersionOne server with data coherent to testdata.xml. ")
     public void testPublish() throws Exception {
         final BuildRunFilter filter = new BuildRunFilter();
         filter.name.add("cctest - build.7");

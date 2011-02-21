@@ -1,14 +1,7 @@
 package com.versionone.cruisecontrol.publisher;
 
 import com.versionone.DB;
-import com.versionone.om.BuildProject;
-import com.versionone.om.BuildRun;
-import com.versionone.om.ChangeSet;
-import com.versionone.om.PrimaryWorkitem;
-import com.versionone.om.SDKException;
-import com.versionone.om.SecondaryWorkitem;
-import com.versionone.om.V1Instance;
-import com.versionone.om.Workitem;
+import com.versionone.om.*;
 import com.versionone.om.filters.BuildProjectFilter;
 import com.versionone.om.filters.ChangeSetFilter;
 import com.versionone.om.filters.WorkitemFilter;
@@ -20,6 +13,9 @@ import net.sourceforge.cruisecontrol.util.XMLLogHelper;
 import org.apache.log4j.Logger;
 import org.jdom.Element;
 
+import java.lang.String;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,12 +41,15 @@ public final class VersionOnePublisher implements Publisher {
     private Pattern v1PatternCommit;
     private String ccWebRoot;
     private String referenceField;
-
+    private boolean v1UseProxy;
+    private String v1ProxyUrl;
+    private String v1ProxyUserName;
+    private String v1ProxyPassword;
     private V1Instance v1Instance;
 
     // Setters
 
-    public void setUrl(java.lang.String v1Host) {
+    public void setUrl(String v1Host) {
         this.v1Url = v1Host;
     }
 
@@ -70,24 +69,54 @@ public final class VersionOnePublisher implements Publisher {
         this.ccWebRoot = ccWebRoot;
     }
 
-
     public void setReferenceField(String field) {
         this.referenceField = field;
+    }
+
+    public void setUseProxy(boolean v1UseProxy) {
+        this.v1UseProxy = v1UseProxy;
+    }
+
+    public void setProxyUrl(String v1proxyHost) {
+        this.v1ProxyUrl = v1proxyHost;
+    }
+
+    public void setProxyUserName(String v1ProxyUserName) {
+        this.v1ProxyUserName = v1ProxyUserName;
+    }
+
+    public void setProxyPassword(String v1ProxyPassword) {
+        this.v1ProxyPassword = v1ProxyPassword;
     }
     //\\ Setters
 
     protected void init() throws CruiseControlException {
         try {
             if (v1Instance == null) {
-                v1Instance = new V1Instance(v1Url, v1UserName, v1Password);
+                ProxySettings proxy = GetProxy();
+                v1Instance = new V1Instance(v1Url, v1UserName, v1Password, proxy);
                 LOG.info("VersionOne connector instance created.");
                 v1Instance.validate();
                 LOG.info("VersionOne connector instance validated.");
             }
         } catch (SDKException e) {
-            final String message = "Unable to connect to VersionOne. Url, username or password is not valid";
+            final String message = "Unable to connect to VersionOne. Connection settings (url, username, password or proxy) are not valid";
             LOG.error(message, e);
             throw new CruiseControlException(message, e);
+        }
+    }
+
+    private ProxySettings GetProxy() {
+        if(!v1UseProxy) {
+            return null;
+        }
+
+        try {
+            URI uri = new  URI(v1ProxyUrl);
+            return new ProxySettings(uri, v1ProxyUserName, v1ProxyPassword);
+        } catch (URISyntaxException e) {
+            LOG.error("Failed to create proxy URI", e);
+            return null;
         }
     }
 
