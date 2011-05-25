@@ -145,7 +145,7 @@
 				<include name="src/**/*"/>
 				<include name="tests/**/*"/>
 				<include name="lib/**/*"/>
-				<include name="DocSource/**/*"/>
+				<include name="Doc/**/*"/>
 			</fileset>
 		</zip>		
 		
@@ -202,56 +202,8 @@
         <xslt destdir="${coverage.dir}" style="${base.dir}/cobertura.xsl" in="${coverage.dir}/coverage.raw"
           out="${coverage.dir}/coverage-summary.html"/>
     </target>
-
-	<target name="gendoc.clean">
-		<delete dir="${doc.dir}"/>
-	</target>
 	
-	<!-- ===================================================================== -->
-	<!-- Create Documentation-->
-	<!-- ===================================================================== -->		
-	<macrodef name="gendoc.content.base">
-		<attribute name="filename"/>
-		<attribute name="collect.xref.targets"/>
-		<attribute name="content.doc.output.dir" default="${doc.dir}/@{filename}"/>
-		<sequential>
-			<mkdir dir="@{content.doc.output.dir}"/>
-			<echo>${doc.source.dir} [/] ${common.dir}/docbook/xsltproc/xsltproc.exe -o ../@{content.doc.output.dir}/@{filename}.html --stringparam current.docid ${filename} --stringparam target.database.document olinkdb.xml --stringparam collect.xref.targets ${collect.xref.targets} --stringparam targets.filename @{filename}.db Common/v1integration.xsl @{filename}/@{filename}.xml</echo>
-			<exec dir="${doc.source.dir}" executable="${common.dir}/docbook/xsltproc/xsltproc.exe"
-				failonerror="true">
-				<arg
-					line="-o @{content.doc.output.dir}/@{filename}.html --stringparam current.docid ${filename} --stringparam target.database.document olinkdb.xml --stringparam collect.xref.targets ${collect.xref.targets} --stringparam targets.filename @{filename}.db Common/v1integration.xsl @{filename}/@{filename}.xml"
-				/>
-			</exec>
-		</sequential>
-	</macrodef>
+    <target name="clean" depends="compile.clean,package.clean,zip.clean"/>
 
-	<target name="gendoc">
-		<property name="doc.source.dir" value="${base.dir}/DocSource"/>
-		<property name="common.dir" value="${doc.source.dir}/Common"/>
-		
-		<delete dir="${doc.dir}/Common"/>
-		<mkdir dir="${doc.dir}/Common"/>
-		<copy file="${doc.source.dir}/Common/v1integration.css" todir="${doc.dir}/Common"/>
-		
-		<!-- this is the index file -->
-		<echo>${doc.source.dir} [/] ${common.dir}/docbook/xsltproc/xsltproc.exe -o ../${doc.dir}/index.html Common/index.xsl versionOnePublisher.index.xml</echo>
-		<exec dir="${doc.source.dir}" executable="${common.dir}/docbook/xsltproc/xsltproc.exe"
-			failonerror="true">
-			<arg line="-o ${doc.dir}/index.html Common/index.xsl versionOnePublisher.index.xml"/>
-		</exec>
-		
-		<copy todir="${doc.dir}/V1Publisher" flatten="false">
-			<fileset dir="${doc.source.dir}/V1Publisher">
-				<include name="*.jpg" />
-			</fileset>
-		</copy>
-		<gendoc.content.base filename="V1Publisher" collect.xref.targets="only"/>
-		<gendoc.content.base filename="V1Publisher" collect.xref.targets="no"/>
-		
-	</target>	
-
-    <target name="clean" depends="compile.clean,gendoc.clean,package.clean,zip.clean"/>
-
-    <target name="ccnet.build" depends="clean, compile, coverage, plugin.test, gendoc, zip.plugin"/>
+    <target name="ccnet.build" depends="clean, compile, coverage, plugin.test, zip.plugin"/>
 </project>
