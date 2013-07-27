@@ -23,9 +23,10 @@ and
 ```
 
 where:
-    v1url                   - The url to VersionOne server
-    username                - User name for VersionOne
-    password                - Password for VersionOne
-    referenceexpression     - The regular expression to use when matching primary workitems (stories and defects) with change comments. Required when using changeset integration.  String  (varies)  Null
-    path_to_root_of_cc      - The path to CruiseControl root web folder (ex. http://localhost:8080)
-    referencefield          - The system name of an attribute to search when matching primary workitems (stories and defects) with change comments. Required when using changeset integration.
+
+   * v1url                   - The url to VersionOne server
+   * username                - User name for VersionOne
+   * password                - Password for VersionOne
+   * referenceexpression     - The regular expression to use when matching primary workitems (stories and defects) with change comments. Required when using changeset integration.  String  (varies)  Null
+   * path_to_root_of_cc      - The path to CruiseControl root web folder (ex. http://localhost:8080)
+   * referencefield          - The system name of an attribute to search when matching primary workitems (stories and defects) with change comments. Required when using changeset integration.
