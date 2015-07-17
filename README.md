@@ -1,5 +1,9 @@
 # VersionOne Integration for CruiseControl
 
+Copyright (c) 2008-2014 VersionOne, Inc. All rights reserved.
+
+**The VersionOne Integration for Quick Test Professional has been deprecated as of the Spring 2014 release of VersionOne and is no longer supported by VersionOne. It is now open-sourced and supported by the development community.**
+
 The VersionOne CruiseControl publisher creates a record of builds in VersionOne, so the development teams can quickly view builds associated with a story or defects. This visibility is useful when identifying what build to use for verification or when generating release notes.
 
 ## Adding plugin for project
